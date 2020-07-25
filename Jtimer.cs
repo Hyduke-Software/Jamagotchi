@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Windows;
-
+//not in use
 namespace Jamagotchi
 {
     class TimerExample
