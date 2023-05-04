@@ -1,19 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Timers;
-using System.Threading;
 using Timer = System.Timers.Timer;
 
 namespace Jamagotchi
@@ -25,16 +13,13 @@ namespace Jamagotchi
     public partial class MainWindow : Window
     {
 
-
-
+        Creature doggy = new Creature();
         int healthLevel =50; //all up to 100
         int stinkinessLevel = 50;
-        int happinessLevel = 50;
-        int hungrinessLevel = 99;
-        int boredomLevel = 50;
+        //int happinessLevel = 50;
         int ageLevel = 0;
         bool awake = true; //true is awake, false is asleep
-        string petName = "KILLER";
+
         bool start = false;
 
 
@@ -42,6 +27,8 @@ namespace Jamagotchi
 
         public MainWindow()
         {
+           
+            doggy.skill = 2;
             InitializeComponent();
             Timer timer = new Timer(); //runs every 2.5 seconds, somehow.
             timer.Interval = 2500;
@@ -58,8 +45,16 @@ namespace Jamagotchi
         private void TimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
         {
             RefreshPrintLabel();   // Do stuff
+        
             updateValues();
            
+        }
+        public void inventory()
+        {
+            InventoryTextBox.Text = "1 slice of water melon";
+
+
+
         }
 
         void sleepStart()
@@ -82,7 +77,7 @@ namespace Jamagotchi
         {
             this.Dispatcher.Invoke(() => //This allows the UI to be updated by another thread
             {
-                postHistory($"{petName} woke up.");
+                postHistory($"{doggy.name} woke up.");
             });
 
             awake = true;
@@ -111,44 +106,44 @@ namespace Jamagotchi
             
             if (awake == false)
             {
-                postHistory($"{petName} is asleep.");
+                postHistory($"{doggy.name} is asleep.");
             }
             if (awake == true)
             {
-                switch ((hungrinessLevel > 75 ? "High" :
-              hungrinessLevel > 55 ? "Mid" :
-              hungrinessLevel > 25 ? "Low" :
-              hungrinessLevel > 10 ? "Little" : "None")) //I think "NONE" is less than 1...
+                switch ((doggy.hungerLevel > 75 ? "High" :
+              doggy.hungerLevel > 55 ? "Mid" :
+              doggy.hungerLevel > 25 ? "Low" :
+              doggy.hungerLevel > 10 ? "Little" : "None")) //I think "NONE" is less than 1...
                 {
                     case "High":
-                        postHistory($"{petName} was very hungry and ate a lot.");
-                        hungrinessLevel = hungrinessLevel - 70;
-                        happinessLevel = happinessLevel + 50;
+                        postHistory($"{doggy.name} was very hungry and ate a lot.");
+                        doggy.hungerLevel = doggy.hungerLevel - 70;
+                        doggy.happinessLevel = doggy.happinessLevel + 50;
                         healthLevel++;
                         break;
 
                     case "Mid":
-                        postHistory($"{petName} was quite hungry and ate a lot");
-                        hungrinessLevel = hungrinessLevel - 50;
-                        happinessLevel = happinessLevel + 30;
+                        postHistory($"{doggy.name} was quite hungry and ate a lot");
+                        doggy.hungerLevel = doggy.hungerLevel - 50;
+                        doggy.happinessLevel = doggy.happinessLevel + 30;
                         healthLevel++;
                         break;
                     case "Low":
-                        postHistory($"{petName} was moderately hungry and ate a snack.");
-                        hungrinessLevel = hungrinessLevel - 20;
-                        happinessLevel = happinessLevel + 20;
+                        postHistory($"{doggy.name} was moderately hungry and ate a snack.");
+                        doggy.hungerLevel = doggy.hungerLevel - 20;
+                        doggy.happinessLevel = doggy.happinessLevel + 20;
                         break;
 
                     case "Little":
-                        postHistory($"{petName} was barely hungry so had a nibble.");
-                        hungrinessLevel = 0;
-                        happinessLevel = happinessLevel + 5;
+                        postHistory($"{doggy.name} was barely hungry so had a nibble.");
+                        doggy.hungerLevel = 0;
+                        doggy.happinessLevel = doggy.happinessLevel + 5;
                         break;
 
                     case "None":
-                        postHistory($"{petName} won't eat any more.");
-                        hungrinessLevel = 0;
-                        happinessLevel = happinessLevel - 5;
+                        postHistory($"{doggy.name} won't eat any more.");
+                        doggy.hungerLevel = 0;
+                        doggy.happinessLevel = doggy.happinessLevel - 5;
                         break;
                 }
             }
@@ -166,28 +161,28 @@ namespace Jamagotchi
         private void updateValues()
         {
             stinkinessLevel++;
-            hungrinessLevel++;
+            doggy.hungerLevel++;
             ageLevel++;
 
             if (healthLevel < 10)
             {
-                happinessLevel--;
+                doggy.happinessLevel--;
 
             }
 
-            if (happinessLevel < 10 || ageLevel > 365 || hungrinessLevel >95 || stinkinessLevel > 95)
+            if (doggy.happinessLevel < 10 || ageLevel > 365 || doggy.hungerLevel >95 || stinkinessLevel > 95)
             {
 
                 healthLevel--;
             }
 
-            if(happinessLevel > 50 && hungrinessLevel < 20 && stinkinessLevel < 20)
+            if(doggy.happinessLevel > 50 && doggy.hungerLevel < 20 && stinkinessLevel < 20)
             {
 
                 healthLevel++;
             }
 
-            if(hungrinessLevel > 50)
+            if(doggy.hungerLevel > 50)
             {
 
                 this.Dispatcher.Invoke(() => //This allows the UI to be updated by another thread
@@ -205,7 +200,10 @@ namespace Jamagotchi
                 });
             }
 
-
+            this.Dispatcher.Invoke(() =>
+            {
+                inventory();
+            });
 
         }
         private void randEventCalledSub(object sender, ElapsedEventArgs elapsedEventArgs)
@@ -217,11 +215,11 @@ namespace Jamagotchi
                 case 0:
                     this.Dispatcher.Invoke(() => //This allows the UI to be updated by another thread
                     {
-                        postHistory($"{petName} just had a big poo!");
+                        postHistory($"{doggy.name} just had a big poo!");
 
                     });
                     stinkinessLevel = stinkinessLevel + 20;
-                    hungrinessLevel++;
+                    doggy.hungerLevel++;
                     healthLevel++;
                     break;
 
@@ -230,11 +228,11 @@ namespace Jamagotchi
                     {
                         this.Dispatcher.Invoke(() => //This allows the UI to be updated by another thread
                         {
-                            postHistory($"{petName} fell asleep.");
+                            postHistory($"{doggy.name} fell asleep.");
 
                         });
                         sleepStart();
-                        happinessLevel++;
+                        doggy.happinessLevel++;
                         healthLevel = healthLevel + 5;
 
                         break;
@@ -243,20 +241,20 @@ namespace Jamagotchi
                 case 2:
                     this.Dispatcher.Invoke(() => //This allows the UI to be updated by another thread
                     {
-                        postHistory($"{petName} is playing with its toys.");
+                        postHistory($"{doggy.name} is playing with its toys.");
                     });
-                    hungrinessLevel++;
-                    happinessLevel++;
+                    doggy.hungerLevel++;
+                    doggy.happinessLevel++;
                     healthLevel = healthLevel + 5;
                     break;
 
                 case 3:
                     this.Dispatcher.Invoke(() => //This allows the UI to be updated by another thread
                     {
-                        postHistory($"{petName} feels unwell");
+                        postHistory($"{doggy.name} feels unwell");
                     });
-                    hungrinessLevel--;
-                    happinessLevel--;
+                    doggy.hungerLevel--;
+                    doggy.happinessLevel--;
                     healthLevel--;
                     break;
 
@@ -290,19 +288,19 @@ namespace Jamagotchi
                 case "High":
                     postHistory("A big poo was cleaned up.");
                     stinkinessLevel = stinkinessLevel - 70;
-                    happinessLevel = happinessLevel + 50;
+                    doggy.happinessLevel = doggy.happinessLevel + 50;
                     healthLevel++;
                     break;
 
                 case "Mid":
                     postHistory("A medium poo was cleaned up.");
                     stinkinessLevel = stinkinessLevel - 50;
-                    happinessLevel = happinessLevel + 30;
+                    doggy.happinessLevel = doggy.happinessLevel + 30;
                     break;
                 case "Low":
                     postHistory("A little poo was cleaned up.");
                     stinkinessLevel = stinkinessLevel - 20;
-                    happinessLevel = happinessLevel + 20;
+                    doggy.happinessLevel = doggy.happinessLevel + 20;
                     healthLevel++;
 
                     break;
@@ -312,7 +310,7 @@ namespace Jamagotchi
                     stinkinessLevel = 0;
                     healthLevel++;
 
-                    happinessLevel = happinessLevel + 15;
+                    doggy.happinessLevel = doggy.happinessLevel + 15;
                     break;
 
                 case "None":
@@ -333,6 +331,20 @@ namespace Jamagotchi
 
 
         }
+        public string ConvertToBars(int value)
+        {
+        //converts an int into bar lines for dispalying in the GUI
+            string bar = "";
+            float a = value / 10;
+            int b = (int)Math.Round(a);
+            for (int i = 0; i < b; i++)
+            {
+                bar += "|";
+                    
+            }
+
+                return bar;
+        }
 
         public void RefreshPrintLabel()
         {
@@ -345,11 +357,12 @@ namespace Jamagotchi
             this.Dispatcher.Invoke(() => //This allows the UI to be updated by another thread
             {
                 //some re-freshing subs required to perform calculations
-                StinkinessLabel.Content = (stinkinessLevel.ToString());
-                HappinessLabel.Content = (happinessLevel.ToString());
-                HungrinessLabel.Content = (hungrinessLevel.ToString());
+                ConditionLabel.Content = ConvertToBars(healthLevel);
+                //(stinkinessLevel.ToString());
+                HappinessLabel.Content = ConvertToBars(doggy.happinessLevel);
+                HungrinessLabel.Content = ConvertToBars(doggy.hungerLevel);
                 AgeLabel.Content = (ageLevel/24).ToString(); //age counter is an hour so we turn it into days.
-                HealthinessLabel.Content = (healthLevel.ToString());
+                ConditionLabel.Content = ConvertToBars(healthLevel);
                 AwakeLabel.Content = awake;
                 
             });

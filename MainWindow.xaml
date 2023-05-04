@@ -12,18 +12,23 @@
         <Button Content="Play" HorizontalAlignment="Left" Margin="330,369,0,0" VerticalAlignment="Top" Click="Play"/>
         <Label Content="Happiness" HorizontalAlignment="Left" Margin="17,304,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.395,0.618"/>
         <Label Content="Hungriness" HorizontalAlignment="Left" Margin="17,330,0,0" VerticalAlignment="Top"/>
-        <Label Content="Stinkiness" HorizontalAlignment="Left" Margin="17,356,0,0" VerticalAlignment="Top"/>
-        <Label Content="Healthiness" HorizontalAlignment="Left" Margin="17,278,0,0" VerticalAlignment="Top"/>
+        <Label Content="Condition" HorizontalAlignment="Left" Margin="17,356,0,0" VerticalAlignment="Top"/>
+        <Label Content="Skill" HorizontalAlignment="Left" Margin="17,278,0,0" VerticalAlignment="Top"/>
+        <Label Content="Physique" HorizontalAlignment="Left" Margin="17,252,0,0" VerticalAlignment="Top"/>
         <Label Content="Age" HorizontalAlignment="Left" Margin="529,338,0,0" VerticalAlignment="Top"/>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="102,278,0,0" VerticalAlignment="Top" Name="HealthinessLabel"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="102,278,0,0" VerticalAlignment="Top" Name="SkillLabel"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="102,252,0,0" VerticalAlignment="Top" Name="PhysiqueLabel"/>
         <Label Content="Label" HorizontalAlignment="Left" Margin="102,304,0,0" VerticalAlignment="Top" Name="HappinessLabel"/>
         <Label Content="Label" HorizontalAlignment="Left" Margin="102,330,0,0" VerticalAlignment="Top" Name="HungrinessLabel"/>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="102,356,0,0" VerticalAlignment="Top" Name="StinkinessLabel"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="102,356,0,0" VerticalAlignment="Top" Name="ConditionLabel"/>
         <Label Content="Label" HorizontalAlignment="Left" Margin="577,338,0,0" VerticalAlignment="Top" Name= "AgeLabel"/>
         <Label Content="Awake" HorizontalAlignment="Left" Margin="17,387,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.632,0.348"/>
         <Label Content="Label" HorizontalAlignment="Left" Margin="102,387,0,0" VerticalAlignment="Top" Name="AwakeLabel"/>
         <Image HorizontalAlignment="Left" Height="150" Margin="230,0,0,0" VerticalAlignment="Top" Width="175" Source="C:\Users\James\Desktop\jamagotchi\cat.png"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,144,0,0" Text="Jamagotchi, the virtual pet!" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" Height="134" x:Name="HistoryText" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+        <TextBox HorizontalAlignment="Left" Margin="163,194,0,0" Text="Jamagotchi, the virtual pet!" TextWrapping="Wrap" VerticalAlignment="Top" Width="360" Height="136" x:Name="HistoryText" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+        <Label Content="Current action" HorizontalAlignment="Left" Margin="163,414,0,0" VerticalAlignment="Top"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="280,414,0,0" VerticalAlignment="Top" x:Name= "ActionLabel" Width="200"/>
+        <TextBox HorizontalAlignment="Left" Margin="17,44,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="195" Name="InventoryTextBox"/>
 
 
     </Grid>
